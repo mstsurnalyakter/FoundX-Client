@@ -6,7 +6,7 @@ import { Button } from '@heroui/button'
 import { Link } from '@heroui/link'
 import React from 'react'
 
-const page = async() => {
+const RecentPosts = async() => {
      const {data:posts} = await getRecentPosts()
   return (
     <Container>
@@ -30,4 +30,4 @@ const page = async() => {
   )
 }
 
-export default page
+export default RecentPosts

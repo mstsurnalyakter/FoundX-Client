@@ -19,6 +19,7 @@ import {
   Logo,
 } from "@/src/components/icons";
 import { Link } from "@heroui/link";
+import { Avatar } from "@heroui/avatar";
 
 export const Navbar = () => {
 
@@ -57,6 +58,7 @@ export const Navbar = () => {
         <NavbarItem className="hidden sm:flex gap-2">
        
           <ThemeSwitch />
+          <Avatar name="John" />
         </NavbarItem>
 
       </NavbarContent>
