@@ -1,6 +1,7 @@
-import React from 'react'
+import { ReactNode } from "react"
 
-export const Container = ({children}:{children: React.ReactNode}) => {
+
+export const Container = ({children}:{children: ReactNode}) => {
   return (
        <div className="container mx-auto max-w-7xl pt-16 px-6 flex-grow">
       {children}

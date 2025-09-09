@@ -3,6 +3,8 @@
 
 import FXForm from "@/src/components/form/FXForm";
 import FXInput from "@/src/components/form/FXInput";
+import Loading from "@/src/components/UI/Loading";
+import { useUserRegistration } from "@/src/hooks/auth.hook";
 import registerValidationSchema from "@/src/types/register";
 import { Button } from "@heroui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,17 +13,22 @@ import Link from "next/link";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 
 export default function RegisterPage() {
-
+const {mutate:handleUserRegistraion,isPending} = useUserRegistration()
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const userData = {
       ...data,
       profilePhoto:"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
     }
+    handleUserRegistraion(userData)
     
   };
 
   return (
+    <>
+    {
+      isPending && <Loading />
+    }
     <div className="flex h-[calc(100vh-100px)] flex-col items-center justify-center">
       <h3 className="my-2 text-xl font-bold">Register with FoundX</h3>
       <p className="mb-4">Help Lost Items Find Their Way Home</p>
@@ -68,5 +75,6 @@ export default function RegisterPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }
