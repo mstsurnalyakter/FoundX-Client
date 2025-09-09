@@ -3,18 +3,31 @@ import FXForm from "@/src/components/form/FXForm";
 import FXInput from "@/src/components/form/FXInput";
 import { Button } from "@heroui/button";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginVaridationSchema } from "@/src/schema/login.schema";
 import { useUserLogin } from "@/src/hooks/auth.hook";
 import Loading from "@/src/components/UI/Loading";
+import { useRouter, useSearchParams } from "next/navigation";
 const LoginPage = () => {
-  const { mutate: handleLogin, isPending } = useUserLogin();
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect");
+  const router = useRouter();
+  const { mutate: handleLogin, isPending, isSuccess } = useUserLogin();
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     handleLogin(data);
   };
 
+  useEffect(() => {
+    if (!isPending && isSuccess) {
+      if (redirect) {
+        router.push(redirect);
+      } else {
+        router.push("/");
+      }
+    }
+  }, [isPending,isSuccess]);
   return (
     <>
       {isPending && <Loading />}
@@ -24,9 +37,9 @@ const LoginPage = () => {
         <div className="w-[35%]">
           <FXForm
             defaultValues={{
-            email: "mir@gmail.com",
-            password: "123456",
-          }}
+              email: "mir@gmail.com",
+              password: "123456",
+            }}
             onSubmit={onSubmit}
             resolver={zodResolver(loginVaridationSchema)}
           >

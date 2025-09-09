@@ -8,6 +8,7 @@ import {
 } from "@heroui/dropdown";
 import { Avatar } from "@heroui/avatar";
 import { useRouter } from "next/navigation";
+import { logout } from "@/src/services/AuthService";
 
 
 const NavbarDropdown = () => {
@@ -27,7 +28,7 @@ const NavbarDropdown = () => {
 
         <DropdownItem onClick={()=>handleNavigateion("/profile/settings")} key="settings">Settings</DropdownItem>
 
-        <DropdownItem key="delete" className="text-danger" color="danger">
+        <DropdownItem key="logout" onClick={()=>logout()} className="text-danger" color="danger">
           Logout
         </DropdownItem>
       </DropdownMenu>

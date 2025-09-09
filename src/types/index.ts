@@ -47,3 +47,14 @@ export interface IUser {
   updatedAt?: string
   __v?: number
 }
+
+export interface IDecodedToken  {
+  _id?: string;
+  name?: string;
+  email?: string;
+  mobileNumber?: string;
+  profilePhoto?: string;
+  role?: string;
+  status?: string;
+  [key: string]: any;
+};
