@@ -19,11 +19,14 @@ import { Logo } from "@/src/components/icons";
 import { Link } from "@heroui/link";
 import NavbarDropdown from "./NavbarDropdown";
 import { useUser } from "@/src/context/user.provider";
+import { Button } from "@heroui/button";
+import { useRouter } from "next/navigation";
 
 
 
 export const Navbar = () => {
    const {user} = useUser()
+   const router = useRouter()
   return (
     <HeroUINavbar maxWidth="xl" position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
@@ -63,7 +66,7 @@ export const Navbar = () => {
           <NavbarDropdown />
         </NavbarItem>):(
           <NavbarItem className="hidden sm:flex gap-2">
-          <Link href="/login">Login</Link>
+            <Button onClick={()=>router.push("/login")}>Login</Button>
         </NavbarItem>
         )
         }
