@@ -1,17 +1,22 @@
 'use client'
 import { FXDatePicker } from '@/src/components/form/FXDatePicker';
-// import { FXDatePicker } from '@/src/components/form/FXDatePicker';
 import FXInput from '@/src/components/form/FXInput';
+import FXSelect from '@/src/components/form/FXSelect';
 import dateToISO from '@/src/utils/dateToISO';
 import { Button } from '@heroui/button';
 import { Divider } from '@heroui/divider';
-import React from 'react'
 import { FieldValues, FormProvider, SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
+import {allDistict} from "@bangladeshi/bangladesh-address"
+
+
+const cityOptions = allDistict()
+
 
 
 const page = () => {
   const methods = useForm();
   const { control, handleSubmit } = methods;
+  console.log(cityOptions)
   const { fields, append, remove } = useFieldArray({
     control,
     name: "questions"
@@ -56,9 +61,9 @@ const page = () => {
               <div className="min-w-fit flex-1">
                 <FXInput label="Location" name="location" />
               </div>
-              {/* <div className="min-w-fit flex-1">
+              <div className="min-w-fit flex-1">
                 <FXSelect label="City" name="city" options={cityOptions} />
-              </div> */}
+              </div>
             </div>
             <div className="flex flex-wrap gap-2 py-2">
               {/* <div className="min-w-fit flex-1">
