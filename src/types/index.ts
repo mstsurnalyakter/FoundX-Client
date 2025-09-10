@@ -49,12 +49,12 @@ export interface IUser {
 }
 
 export interface IDecodedToken  {
-  _id?: string;
-  name?: string;
-  email?: string;
-  mobileNumber?: string;
-  profilePhoto?: string;
-  role?: string;
-  status?: string;
+  _id: string;
+  name: string;
+  email: string;
+  mobileNumber: string;
+  profilePhoto: string;
+  role: string;
+  status: string;
   [key: string]: any;
 };

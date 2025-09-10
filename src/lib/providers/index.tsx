@@ -1,12 +1,13 @@
 "use client";
 
 import type { ThemeProviderProps } from "next-themes";
-import { Toaster } from 'sonner'
+import { Toaster } from "sonner";
 import * as React from "react";
 import { HeroUIProvider } from "@heroui/system";
 import { useRouter } from "next/navigation";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import UserProvider from "@/src/context/user.provider";
 const queryClient = new QueryClient();
 export interface ProvidersProps {
   children: React.ReactNode;
@@ -26,10 +27,12 @@ export function Providers({ children, themeProps }: ProvidersProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <HeroUIProvider navigate={router.push}>
-        <Toaster />
-        <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
-      </HeroUIProvider>
+      <UserProvider>
+        <HeroUIProvider navigate={router.push}>
+          <Toaster />
+          <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
+        </HeroUIProvider>
+      </UserProvider>
     </QueryClientProvider>
   );
 }

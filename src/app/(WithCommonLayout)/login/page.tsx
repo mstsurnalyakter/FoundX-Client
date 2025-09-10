@@ -10,13 +10,16 @@ import { loginVaridationSchema } from "@/src/schema/login.schema";
 import { useUserLogin } from "@/src/hooks/auth.hook";
 import Loading from "@/src/components/UI/Loading";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useUser } from "@/src/context/user.provider";
 const LoginPage = () => {
   const searchParams = useSearchParams();
+  const {setIsLoading:userLoading} = useUser()
   const redirect = searchParams.get("redirect");
   const router = useRouter();
   const { mutate: handleLogin, isPending, isSuccess } = useUserLogin();
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     handleLogin(data);
+    userLoading(true)
   };
 
   useEffect(() => {

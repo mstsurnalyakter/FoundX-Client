@@ -4,7 +4,7 @@ import axiosInstance from "@/src/lib/axiosInstance";
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
 import { jwtDecode } from "jwt-decode";
-import { IDecodedToken, IUser } from "@/src/types";
+import { IDecodedToken } from "@/src/types";
 
 
 export const registerUser = async (userData: FieldValues) => {
