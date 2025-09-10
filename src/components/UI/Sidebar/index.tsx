@@ -14,12 +14,14 @@ const Sidebar = () => {
     <div>
       <div className="rounded-xl bg-default-100 p-2">
         <div className="h-[330px] w-full rounded-md">
-           <Image
+          {
+            user?.profilePhoto && ( <Image
             alt="profile"
             height={100}
-            src={user?.profilePhoto as string}
+            src={user.profilePhoto}
             width={100}
-          />
+          />)
+          }
         </div>
         <div className="my-3">
           <h1 className="text-2xl font-semibold">{user?.name}</h1>

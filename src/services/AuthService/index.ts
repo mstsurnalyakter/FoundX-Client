@@ -48,11 +48,10 @@ export const logout = async () =>{
 
 export const getCurrentUser = async () => {
   const accessToken = (await cookies()).get("accessToken")?.value;
-  console.log(accessToken)
   let decodedToken: IDecodedToken | null = null;
   if (accessToken) {
     decodedToken = await jwtDecode<IDecodedToken>(accessToken);
-    console.log(decodedToken);
+  
     return {
       _id: decodedToken?._id,
       name: decodedToken?.name,

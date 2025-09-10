@@ -11,7 +11,6 @@ export const useUserRegistration= ()=>{
             toast.success('User registration Successful')
         },
         onError:(error)=>{
-            console.log(error)
             toast.error(error?.message)
         }
 
@@ -26,7 +25,6 @@ export const useUserLogin= ()=>{
             toast.success('User Login Successful')
         },
         onError:(error)=>{
-            console.log(error)
             toast.error(error?.message)
         }
 
