@@ -1,5 +1,5 @@
 const envConfig = {
-    backendUrl:process.env.BACKEND_URL
+    backendURL:process.env.NEXT_PUBLIC_BACKEND_URL
 }
 
 export default envConfig;

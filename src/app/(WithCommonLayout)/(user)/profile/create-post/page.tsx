@@ -7,16 +7,23 @@ import { Button } from '@heroui/button';
 import { Divider } from '@heroui/divider';
 import { FieldValues, FormProvider, SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 import {allDistict} from "@bangladeshi/bangladesh-address"
+import { useGetCategories } from '@/src/hooks/categories.hook';
 
 
-const cityOptions = allDistict()
-
-
+const cityOptions = allDistict().sort().map((city:string)=>({
+  key:city,
+  label:city
+}))
 
 const page = () => {
+
+const {data:categoriesData,isLoading,isSuccess} = useGetCategories()
+
+console.log(categoriesData)
+
+
   const methods = useForm();
   const { control, handleSubmit } = methods;
-  console.log(cityOptions)
   const { fields, append, remove } = useFieldArray({
     control,
     name: "questions"
