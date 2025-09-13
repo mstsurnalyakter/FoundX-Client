@@ -38,7 +38,7 @@ const NavbarDropdown = () => {
       <DropdownMenu aria-label="Static Actions">
         <DropdownItem onClick={()=>handleNavigateion("/profile")} key="profile">Profile</DropdownItem>
 
-        <DropdownItem onClick={()=>handleNavigateion("/profile/create-post")} key="create-profile">Create Profile</DropdownItem>
+        <DropdownItem onClick={()=>handleNavigateion("/profile/create-post")} key="create-profile">Create Post</DropdownItem>
 
         <DropdownItem onClick={()=>handleNavigateion("/profile/settings")} key="settings">Settings</DropdownItem>
 

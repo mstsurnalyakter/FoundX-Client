@@ -11,6 +11,10 @@ import { useGetCategories } from '@/src/hooks/categories.hook';
 import { ChangeEvent, useState } from 'react';
 import { AddIcon, TrashIcon } from '@/src/assets/icons';
 import FXTextArea from '@/src/components/form/FXTextArea';
+import { useUser } from '@/src/context/user.provider';
+import { useCreatePost } from '@/src/hooks/post.hook';
+import Loading from '@/src/components/UI/Loading';
+import { useRouter } from 'next/navigation';
 
 
 const cityOptions = allDistict().sort().map((city: string) => ({
@@ -19,12 +23,16 @@ const cityOptions = allDistict().sort().map((city: string) => ({
 }))
 
 const page = () => {
+  const { user } = useUser()
+  const router = useRouter()
 
   const [imageFile, setImageFile] = useState<File[] | []>([]);
   const [imagePreviews, setImagePreviews] = useState<string[] | []>([])
-  console.log(imagePreviews)
+
 
   const { data: categoriesData, isLoading: isCategoryLoading, isSuccess: isCategorySuccess } = useGetCategories()
+  const {mutate:handleCreatePost,isPending:CreatePostPending,isSuccess:CreatePostSuccess} = useCreatePost()
+
 
   let categoryOption: { key: string, label: string }[] = [];
 
@@ -45,12 +53,23 @@ const page = () => {
 
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    const formData = new FormData()
     const postData = {
       ...data,
       questions: data?.questions?.map((qus: { value: string }) => qus?.value),
-      dateFound: dateToISO(data?.dateFound)
+      dateFound: dateToISO(data?.dateFound),
+      user: user?._id,
+
     }
-    console.log(postData)
+
+    formData.append("data", JSON.stringify(postData));
+    for (let image of imageFile) {
+      formData.append("itemImages", image)
+    }
+
+    handleCreatePost(formData)
+
+    
 
   }
 
@@ -76,10 +95,18 @@ const page = () => {
       reader.readAsDataURL(file);
     }
   };
-  
+
+  if (!CreatePostPending && CreatePostSuccess) {
+    router.push('/')
+  }
+
 
 
   return (
+    <>
+    {
+      CreatePostPending && <Loading/>
+    }
     <div className="h-full rounded-xl bg-gradient-to-b from-default-100 px-[73px] py-12">
       <h1 className="text-2xl font-semibold">Post a found item</h1>
       <Divider className="mb-5 mt-3" />
@@ -128,27 +155,27 @@ const page = () => {
           </div>
 
           {imagePreviews.length > 0 && (
-              <div className="flex gap-5 my-5 flex-wrap">
-                {imagePreviews.map((imageDataUrl) => (
-                  <div
-                    key={imageDataUrl}
-                    className="relative size-48 rounded-xl border-2 border-dashed border-default-300 p-2"
-                  >
-                    <img
-                      alt="item"
-                      className="h-full w-full object-cover object-center rounded-md"
-                      src={imageDataUrl}
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
+            <div className="flex gap-5 my-5 flex-wrap">
+              {imagePreviews.map((imageDataUrl) => (
+                <div
+                  key={imageDataUrl}
+                  className="relative size-48 rounded-xl border-2 border-dashed border-default-300 p-2"
+                >
+                  <img
+                    alt="item"
+                    className="h-full w-full object-cover object-center rounded-md"
+                    src={imageDataUrl}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
 
           <div className="flex flex-wrap-reverse gap-2 py-2">
-              <div className="min-w-fit flex-1">
-                <FXTextArea label="Description" name="description" />
-              </div>
+            <div className="min-w-fit flex-1">
+              <FXTextArea label="Description" name="description" />
             </div>
+          </div>
 
           <Divider className="my-5" />
 
@@ -183,6 +210,7 @@ const page = () => {
         </form>
       </FormProvider>
     </div>
+    </>
   )
 }
 
