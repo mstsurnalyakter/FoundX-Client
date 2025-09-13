@@ -1,4 +1,5 @@
-import { SearchIcon } from "@/src/components/icons";
+
+import { SearchIcon } from "@/src/assets/icons";
 import { Input } from "@heroui/input";
 
 
