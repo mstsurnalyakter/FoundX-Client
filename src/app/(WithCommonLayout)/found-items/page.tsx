@@ -1,8 +1,17 @@
+import { Container } from '@/src/components/UI/Container'
+import Post from '@/src/components/UI/Post';
+import axiosInstance from '@/src/lib/axiosInstance';
+import { IPost } from '@/src/types';
 import React from 'react'
 
-const page = () => {
+const page = async() => {
+  const { data } = await axiosInstance.get(`/items`);
   return (
-    <div>page</div>
+    <Container>
+       <div className="mx-auto my-3 max-w-[720px]">
+        {data?.data?.map((post: IPost) => <Post key={post?._id} post={post} />)}
+      </div>
+    </Container>
   )
 }
 
