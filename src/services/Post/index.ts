@@ -1,22 +1,29 @@
 "use server";
-import envConfig from "@/src/config";
-import axiosInstance from "@/src/lib/axiosInstance"
+
 import { revalidateTag } from "next/cache";
+
+import { getCurrentUser } from "../AuthService";
+import axiosInstance from "@/src/lib/axiosInstance";
+import envConfig from "@/src/config";
+
+
 
 export const createPost = async (formData: FormData): Promise<any> => {
   try {
-    const { data } = await axiosInstance.post('/items', formData, {
+    const { data } = await axiosInstance.post("/items", formData, {
       headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    }
-    )
-    revalidateTag('posts')
-    return data
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    revalidateTag("posts");
+
+    return data;
   } catch (error) {
-    throw new Error("Fail to create post")
+    console.log(error);
+    throw new Error("Failed to create post");
   }
-}
+};
 
 export const getPost = async (postId: string) => {
   let fetchOptions = {};
@@ -32,4 +39,12 @@ export const getPost = async (postId: string) => {
   }
 
   return res.json();
+};
+
+export const getMyPosts = async () => {
+  const user = await getCurrentUser();
+
+  const res = await axiosInstance.get(`/items?user=${user?._id}`);
+
+  return res.data;
 };

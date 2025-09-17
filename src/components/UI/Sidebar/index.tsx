@@ -1,11 +1,12 @@
-'use client';
+"use client";
 import Link from "next/link";
+import Image from "next/image";
+
+import { SidebarOptions } from "./SidebarOptions";
 
 import { useUser } from "@/src/context/user.provider";
 import { Button } from "@heroui/button";
-import { SidebarOptions } from "./SidebarOptions";
-import { adminLinks, userLinks } from "./constans";
-import Image from "next/image";
+import { userLinks ,adminLinks} from "./constans";
 
 const Sidebar = () => {
   const { user } = useUser();
@@ -14,14 +15,13 @@ const Sidebar = () => {
     <div>
       <div className="rounded-xl bg-default-100 p-2">
         <div className="h-[330px] w-full rounded-md">
-          {
-            user?.profilePhoto && ( <Image
+          <Image
             alt="profile"
-            height={100}
-            src={user.profilePhoto}
-            width={100}
-          />)
-          }
+            className="w-full h-full object-cover rounded-md"
+            height={330}
+            src={user?.profilePhoto as string}
+            width={330}
+          />
         </div>
         <div className="my-3">
           <h1 className="text-2xl font-semibold">{user?.name}</h1>

@@ -25,6 +25,7 @@ const Post = ({post}:IProps) => {
     images,
     user,
     questions,
+    
   } = post || {};
 
   const {name,email,profilePhoto} = (user as IUser) || {};
