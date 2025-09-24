@@ -15,6 +15,22 @@ export const addClaimRequest = async (
   }
 };
 
+
+interface FeedbackData {
+  id: string;
+  data:{
+    feedback:string,
+    status:string
+  }
+}
+
+export const addFeedbackToClaimRequst = async (
+  feedbackData: FeedbackData
+): Promise<any> => {
+  const res = await axiosInstance.put(`/claim-request/${feedbackData?.id}`, feedbackData?.data);
+  return res.data;
+};
+
 export const getReceivedClaimRequest = async () => {
   try {
     const res = await axiosInstance.get(
@@ -27,3 +43,4 @@ export const getReceivedClaimRequest = async () => {
     throw new Error("Failed to fetch data");
   }
 };
+

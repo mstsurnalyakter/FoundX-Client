@@ -6,6 +6,7 @@ import { useState } from "react";
 import {  TClaimRequest } from "@/src/types";
 import ImageGallery from "./ImageGallery";
 import { Avatar } from "@heroui/avatar";
+import FeedbackModal from "../../modals/FeedbackModal";
 
 type TProps = {
   post: TClaimRequest;
@@ -21,7 +22,6 @@ export default function ClaimPostCard({ post }: TProps) {
     feedback,
 
   } = post || {};
-  console.log("Post in ClaimPostCard:", post);
 
   const { images, dateFound, location, city } = item || {};
   const { profilePhoto, name } = claimant || {};
@@ -75,10 +75,11 @@ export default function ClaimPostCard({ post }: TProps) {
               <p className="text-xs text-default-600">{name}</p>
               <p>{description}</p>
             </div>
-            <Eye
+            {/* <Eye
               className="cursor-pointer"
               onClick={() => handleAnswers({ answers, id: _id })}
-            />
+            /> */}
+            <FeedbackModal id={_id} />
           </div>
         </div>
       </div>
