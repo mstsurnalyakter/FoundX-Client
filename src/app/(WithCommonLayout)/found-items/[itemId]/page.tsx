@@ -8,14 +8,10 @@ import { getPost } from "@/src/services/Post";
 
 
 
-interface ItemDetailPageProps {
-  params: {
-    itemId: string;
-  };
-}
 
-const ItemDetailPage = async ({ params }: { params: { itemId: string } }) => {
-  const { data: post } = await getPost(params.itemId);
+const ItemDetailPage = async ({ params }: { params: Promise<{itemId:string}> }) => {
+  const { itemId } = await params;
+  const { data: post } = await getPost(itemId);
 
   return (
     <Container>
