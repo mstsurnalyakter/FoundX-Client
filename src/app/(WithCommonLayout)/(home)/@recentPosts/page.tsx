@@ -1,3 +1,7 @@
+import CTASection from '@/src/components/modules/home/components/CTASection'
+import HowItWorksSection from '@/src/components/modules/home/components/HowItWorksSection'
+import StatsSection from '@/src/components/modules/home/components/StatsSection'
+import TestimonialsSection from '@/src/components/modules/home/components/TestimonialsSection'
 import Card from '@/src/components/UI/Card'
 import { Container } from '@/src/components/UI/Container'
 import { getRecentPosts } from '@/src/services/RecentPost'
@@ -9,6 +13,7 @@ import React from 'react'
 const RecentPosts = async() => {
      const {data:posts} = await getRecentPosts()
   return (
+  <>
     <Container>
       <div className="section-title my-8">
         <h2 className="mb-2 text-center text-2xl">Recently Found Items</h2>
@@ -27,6 +32,11 @@ const RecentPosts = async() => {
         </Button>
       </div>
     </Container>
+    <StatsSection />
+    <HowItWorksSection />
+    <TestimonialsSection />
+    <CTASection />
+  </>
   )
 }
 

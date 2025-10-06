@@ -5,6 +5,7 @@ import { Image } from "@heroui/image";
 import { format } from "date-fns";
 import { Button } from "@heroui/button";
 import { IPost } from "@/src/types";
+import Link from "next/link";
 
 const Card = ({ post }:{post:IPost}) => {
   const { title, category, images, city, dateFound, _id } = post || {};
@@ -34,13 +35,11 @@ const Card = ({ post }:{post:IPost}) => {
           </p>
         </div>
 
-        <Button
-          className="bg-black text-tiny text-white"
-          radius="full"
-          size="sm"
+        <Link href={`/found-items/${_id}`}
+          className="bg-black px-3 py-2 rounded-4xl text-tiny text-white"
         >
           Details
-        </Button>
+        </Link>
       </CardFooter>
     </NextUiCard>
   );
