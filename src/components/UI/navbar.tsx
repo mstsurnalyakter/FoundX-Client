@@ -22,18 +22,21 @@ import { Button } from "@heroui/button";
 import { useRouter } from "next/navigation";
 import { Logo } from "@/src/assets/icons";
 
-
-
 export const Navbar = () => {
-   const {user} = useUser()
-   const router = useRouter()
+  const { user } = useUser();
+  const router = useRouter();
+  
   return (
-    <HeroUINavbar maxWidth="xl" position="sticky">
+    <HeroUINavbar 
+      maxWidth="xl" 
+      position="static" // Changed from "sticky" to "static"
+      className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-divider supports-[backdrop-filter]:bg-background/60"
+    >
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
             <Logo />
-            <p className="font-bold text-inherit">ACME</p>
+            <p className="font-bold text-inherit">FoundX</p>
           </NextLink>
         </NavbarBrand>
         <ul className="hidden sm:flex gap-4 justify-start ml-2">
@@ -42,7 +45,7 @@ export const Navbar = () => {
               <NextLink
                 className={clsx(
                   linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium"
+                  "data-[active=true]:text-primary data-[active=true]:font-medium hover:text-primary transition-colors"
                 )}
                 color="foreground"
                 href={item.href}
@@ -61,15 +64,21 @@ export const Navbar = () => {
         <NavbarItem className="hidden sm:flex gap-2">
           <ThemeSwitch />
         </NavbarItem>
-        {
-          user?.email ?  (<NavbarItem className="hidden sm:flex gap-2">
-          <NavbarDropdown />
-        </NavbarItem>):(
+        {user?.email ? (
           <NavbarItem className="hidden sm:flex gap-2">
-            <Button onClick={()=>router.push("/login")}>Login</Button>
-        </NavbarItem>
-        )
-        }
+            <NavbarDropdown />
+          </NavbarItem>
+        ) : (
+          <NavbarItem className="hidden sm:flex gap-2">
+            <Button 
+              onClick={() => router.push("/login")}
+              color="primary"
+              variant="flat"
+            >
+              Login
+            </Button>
+          </NavbarItem>
+        )}
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
@@ -77,7 +86,7 @@ export const Navbar = () => {
         <NavbarMenuToggle />
       </NavbarContent>
 
-      <NavbarMenu>
+      <NavbarMenu className="pt-6">
         <div className="mx-4 mt-2 flex flex-col gap-2">
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
@@ -89,8 +98,9 @@ export const Navbar = () => {
                       ? "danger"
                       : "foreground"
                 }
-                href="#"
+                href={item.href}
                 size="lg"
+                className="w-full"
               >
                 {item.label}
               </Link>

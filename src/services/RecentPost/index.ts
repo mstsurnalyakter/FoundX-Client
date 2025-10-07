@@ -7,6 +7,7 @@ export const getRecentPosts = async () => {
       tags:['posts']
     }
   }
+
   const res = await fetch(
     `${envConfig.backendURL}/items?sortBy=-createdAt&limit=9`,
     fetchOption

@@ -15,7 +15,11 @@ export const siteConfig = {
     {
       label: "Found Items",
       href: "/found-items",
-    }
+    },
+     { 
+      label: "Contact",
+       href: "/contact" 
+      },
   ],
   navMenuItems: [
   {
