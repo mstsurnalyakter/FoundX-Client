@@ -7,7 +7,7 @@ import { Select, SelectItem } from '@heroui/select'
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle, AlertCircle } from 'lucide-react'
 import { useState } from 'react'
 import { useForm, SubmitHandler, Controller } from 'react-hook-form'
-import { toast } from 'sonner'
+
 import { motion, AnimatePresence } from 'framer-motion'
 
 interface ContactFormData {
@@ -33,37 +33,14 @@ const Contact = () => {
   const onSubmit: SubmitHandler<ContactFormData> = async (data) => {
     setIsSubmitting(true)
     
-    try {
-      console.log('Submitting contact form:', data)
-      
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
+    console.log('Form Data:', data)
 
-      const responseData = await response.json()
-
-      if (response.ok) {
-        setIsSubmitted(true)
-        reset()
-        toast.success('Message sent successfully! Check your email for confirmation.')
-        
-        setTimeout(() => {
-          setIsSubmitted(false)
-        }, 8000)
-      } else {
-        console.error('Error response:', responseData)
-        toast.error(responseData.error || 'Failed to send message. Please try again.')
-      }
-    } catch (error) {
-      console.error('Network error:', error)
-      toast.error('Network error. Please check your connection and try again.')
-    } finally {
+    // Simulate form submission delay
+    setTimeout(() => {
       setIsSubmitting(false)
-    }
+      setIsSubmitted(true)
+      reset()
+    }, 2000)
   }
 
   return (
@@ -146,30 +123,7 @@ const Contact = () => {
                   errorMessage={errors.email?.message}
                 />
                 
-                <Controller
-                  name="subject"
-                  control={control}
-                  rules={{ required: 'Please select a subject' }}
-                  render={({ field }) => (
-                    <Select
-                      label="Subject"
-                      placeholder="Choose a subject"
-                      isInvalid={!!errors.subject}
-                      errorMessage={errors.subject?.message}
-                      selectedKeys={field.value ? [field.value] : []}
-                      onSelectionChange={(keys) => {
-                        const selectedKey = Array.from(keys)[0] as string;
-                        field.onChange(selectedKey);
-                      }}
-                    >
-                      <SelectItem key="general">General Inquiry</SelectItem>
-                      <SelectItem key="technical">Technical Support</SelectItem>
-                      <SelectItem key="report">Report an Issue</SelectItem>
-                      <SelectItem key="partnership">Partnership</SelectItem>
-                      <SelectItem key="feedback">Feedback</SelectItem>
-                    </Select>
-                  )}
-                />
+              
                 
                 <Textarea
                   {...register('message', {

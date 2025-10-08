@@ -69,6 +69,7 @@ export default function CreatePost() {
   const methods = useForm({
     defaultValues: {
       description: "",
+      questions:[] as {value: string}[],
     }
   });
 
@@ -76,7 +77,7 @@ export default function CreatePost() {
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "questions",
+    name: "questions" ,
   });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
@@ -99,7 +100,7 @@ export default function CreatePost() {
   };
 
   const handleFieldAppend = () => {
-    append({ name: "questions" });
+    append({ value: "" });
   };
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {

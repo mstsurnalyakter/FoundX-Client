@@ -19,7 +19,7 @@ interface IProps {
 const Post = ({ post }: IProps) => {
   const [isCopied, setIsCopied] = useState(false);
   const [isShareMenuOpen, setIsShareMenuOpen] = useState(false);
-
+  const hasNativeShare = typeof navigator !== "undefined" && typeof navigator.share === "function";
   const {
     title,
     dateFound,
@@ -54,7 +54,7 @@ const Post = ({ post }: IProps) => {
 
   // Handle native share (mobile devices)
   const handleNativeShare = async () => {
-    if (navigator.share) {
+    if (hasNativeShare) {
       try {
         await navigator.share({
           title: shareTitle,
@@ -209,7 +209,7 @@ const Post = ({ post }: IProps) => {
                   </button>
 
                   {/* Native Share (if supported) */}
-                  {navigator.share && (
+                  {hasNativeShare && (
                     <button
                       onClick={(e) => {
                         e.preventDefault();
