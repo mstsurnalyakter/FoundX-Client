@@ -172,10 +172,6 @@ const LoginPage = () => {
                 </div>
 
                 <FXForm
-                  defaultValues={{
-                    email: "mir@gmail.com",
-                    password: "123456",
-                  }}
                   onSubmit={onSubmit}
                   resolver={zodResolver(loginVaridationSchema)}
                 >

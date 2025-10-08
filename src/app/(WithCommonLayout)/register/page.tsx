@@ -165,12 +165,7 @@ export default function RegisterPage() {
                 </div>
 
                 <FXForm
-                  defaultValues={{
-                    name: "Mir Hussain",
-                    email: "mir@gmail.com",
-                    mobileNumber: "01711223344",
-                    password: "123456",
-                  }}
+          
                   resolver={zodResolver(registerValidationSchema)}
                   onSubmit={onSubmit}
                 >
